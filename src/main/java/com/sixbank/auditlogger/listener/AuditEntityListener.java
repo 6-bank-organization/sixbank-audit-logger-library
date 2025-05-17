@@ -15,8 +15,8 @@ import java.util.Arrays;
  *
  * Example usage:
  *
- * @Entity
- * @EntityListeners(AuditEntityListener.class)
+ * '@Entity'
+ * '@EntityListeners(AuditEntityListener.class)'
  * public class User { ... }
  */
 public class AuditEntityListener {

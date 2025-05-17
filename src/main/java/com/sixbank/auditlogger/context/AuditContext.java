@@ -21,6 +21,9 @@ public class AuditContext {
     public static String getCurrentIp() { return sourceIp.get(); }
     public static String getCurrentUri() { return requestUri.get(); }
 
+    /**
+     * Clears the current thread-local audit context.
+     */
     public static void clear() {
         currentUser.remove();
         sourceIp.remove();
