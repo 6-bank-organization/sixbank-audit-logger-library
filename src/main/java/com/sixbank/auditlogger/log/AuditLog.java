@@ -1,4 +1,4 @@
-package log;
+package com.sixbank.auditlogger.log;
 
 /*
  * Audit Logger Library for Microservices

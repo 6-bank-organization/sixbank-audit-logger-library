@@ -1,6 +1,6 @@
 package com.sixbank.auditlogger.repository;
 
-import log.AuditLog;
+import com.sixbank.auditlogger.log.AuditLog;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 /**

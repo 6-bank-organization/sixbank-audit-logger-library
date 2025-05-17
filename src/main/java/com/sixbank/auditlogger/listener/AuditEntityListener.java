@@ -1,7 +1,7 @@
 package com.sixbank.auditlogger.listener;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import log.AuditLog;
+import com.sixbank.auditlogger.log.AuditLog;
 import com.sixbank.auditlogger.context.AuditContext;
 import com.sixbank.auditlogger.dispatcher.AuditDispatcher;
 import jakarta.persistence.*;

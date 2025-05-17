@@ -1,7 +1,7 @@
 package com.sixbank.auditlogger.dispatcher;
 
 
-import log.AuditLog;
+import com.sixbank.auditlogger.log.AuditLog;
 import com.sixbank.auditlogger.repository.AuditLogElasticRepository;
 import lombok.RequiredArgsConstructor;
 
