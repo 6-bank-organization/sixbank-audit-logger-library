@@ -1,14 +1,13 @@
 package com.sixbank.auditlogger.listener;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sixbank.auditlogger.AuditLog;
+import log.AuditLog;
 import com.sixbank.auditlogger.context.AuditContext;
 import com.sixbank.auditlogger.dispatcher.AuditDispatcher;
 import jakarta.persistence.*;
 
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 
 /**
  * AuditEntityListener automatically logs entity state changes.
