@@ -18,6 +18,7 @@ package com.sixbank.auditlogger.log;
  * Authors: Six Bank Engineering
  * Version: 1.0.0
  */
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -73,6 +74,7 @@ public class AuditLog {
     private String complianceTag;
 
     /** Timestamp of the change */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime timestamp;
 
     /** Flexible metadata container */
