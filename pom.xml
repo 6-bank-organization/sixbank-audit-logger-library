@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.sixbank</groupId>
     <artifactId>sixbank-audit-logger-library</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>sixbank-audit-logger-library</name>
     <description>sixbank-audit-logger-library</description>
     <url/>
@@ -57,6 +57,11 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
