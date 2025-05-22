@@ -1,17 +1,16 @@
 package com.sixbank.auditlogger.example;
 
 /**
- * <h1>AuditLogger Library - Integration Guide</h1>
+ * <p><strong>AuditLogger Library - Integration Guide</strong></p>
  *
- * This class is intended for documentation purposes only.
- * It demonstrates how to integrate the SixBank AuditLogger into a Spring Boot microservice.
+ * <p>This class is intended for documentation purposes only.
+ * It demonstrates how to integrate the SixBank AuditLogger into a Spring Boot microservice.</p>
  *
  * <h2>Overview</h2>
- * The AuditLogger automatically logs entity changes (CREATE, UPDATE, DELETE) by listening to JPA events
- * and pushing the audit logs to Elasticsearch or other log aggregators.
+ * <p>The AuditLogger automatically logs entity changes (CREATE, UPDATE, DELETE) by listening to JPA events
+ * and pushing the audit logs to Elasticsearch or other log aggregators.</p>
  *
  * <h2>Steps to Integrate</h2>
- *
  * <ol>
  *     <li>Add the AuditLogger dependency to your project</li>
  *     <li>Annotate your JPA entities with <code>@EntityListeners(AuditEntityListener.class)</code></li>
