@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sixbank.auditlogger.log.AuditLog;
 import com.sixbank.auditlogger.context.AuditContext;
 import com.sixbank.auditlogger.dispatcher.AuditDispatcher;
+import jakarta.annotation.PreDestroy;
 import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -81,6 +82,7 @@ public class AuditEntityListener {
      *
      * @param entity The entity being removed.
      */
+    @PreDestroy
     @PreRemove
     public void preRemove(Object entity) {
         audit(entity, "DELETE");

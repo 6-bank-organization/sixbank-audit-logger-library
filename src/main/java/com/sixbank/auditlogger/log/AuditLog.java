@@ -34,9 +34,6 @@ import java.util.UUID;
  * It is designed to be GDPR/KYC compliant and indexed into Elasticsearch.
  */
 @Document(indexName = "audit-logs")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class AuditLog {
 
@@ -80,5 +77,129 @@ public class AuditLog {
 
     /** Flexible metadata container */
     private Map<String, Object> metadata;
+
+
+    public AuditLog() {
+    }
+
+    public AuditLog(String id, String entityName, String entityId, String action, String changedBy, String sourceIp, String requestUri, String oldValue, String newValue, String serviceName, String complianceTag, OffsetDateTime timestamp, Map<String, Object> metadata) {
+        this.id = id;
+        this.entityName = entityName;
+        this.entityId = entityId;
+        this.action = action;
+        this.changedBy = changedBy;
+        this.sourceIp = sourceIp;
+        this.requestUri = requestUri;
+        this.oldValue = oldValue;
+        this.newValue = newValue;
+        this.serviceName = serviceName;
+        this.complianceTag = complianceTag;
+        this.timestamp = timestamp;
+        this.metadata = metadata;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getEntityName() {
+        return entityName;
+    }
+
+    public void setEntityName(String entityName) {
+        this.entityName = entityName;
+    }
+
+    public String getEntityId() {
+        return entityId;
+    }
+
+    public void setEntityId(String entityId) {
+        this.entityId = entityId;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+    public String getChangedBy() {
+        return changedBy;
+    }
+
+    public void setChangedBy(String changedBy) {
+        this.changedBy = changedBy;
+    }
+
+    public String getSourceIp() {
+        return sourceIp;
+    }
+
+    public void setSourceIp(String sourceIp) {
+        this.sourceIp = sourceIp;
+    }
+
+    public String getRequestUri() {
+        return requestUri;
+    }
+
+    public void setRequestUri(String requestUri) {
+        this.requestUri = requestUri;
+    }
+
+    public String getOldValue() {
+        return oldValue;
+    }
+
+    public void setOldValue(String oldValue) {
+        this.oldValue = oldValue;
+    }
+
+    public String getNewValue() {
+        return newValue;
+    }
+
+    public void setNewValue(String newValue) {
+        this.newValue = newValue;
+    }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
+
+    public String getComplianceTag() {
+        return complianceTag;
+    }
+
+    public void setComplianceTag(String complianceTag) {
+        this.complianceTag = complianceTag;
+    }
+
+    public OffsetDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(OffsetDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public Map<String, Object> getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(Map<String, Object> metadata) {
+        this.metadata = metadata;
+    }
 }
 
