@@ -17,9 +17,9 @@ import java.time.OffsetDateTime;
  * <p>
  * Supported events:
  * <ul>
- *     <li>{@code @PrePersist} – for create operations</li>
- *     <li>{@code @PreUpdate} – for update operations</li>
- *     <li>{@code @PostRemove} – for delete operations</li>
+ *     <li>{@code @PostPersist} – for successful create operations</li>
+ *     <li>{@code @PostUpdate} – for successful update operations</li>
+ *     <li>{@code @PostRemove} – for successful delete operations</li>
  * </ul>
  *
  * <p>
@@ -57,22 +57,22 @@ public class AuditEntityListener {
     private String complianceTag;
 
     /**
-     * Handles the JPA {@code @PrePersist} event to log create actions.
+     * Handles the JPA {@code @PostPersist} event to log create actions.
      *
      * @param entity The entity being persisted.
      */
-    @PrePersist
-    public void prePersist(Object entity) {
+    @PostPersist
+    public void postPersist(Object entity) {
         audit(entity, "CREATE");
     }
 
     /**
-     * Handles the JPA {@code @PreUpdate} event to log update actions.
+     * Handles the JPA {@code @PostUpdate} event to log update actions.
      *
      * @param entity The entity being updated.
      */
-    @PreUpdate
-    public void preUpdate(Object entity) {
+    @PostUpdate
+    public void postUpdate(Object entity) {
         audit(entity, "UPDATE");
     }
 
