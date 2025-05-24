@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.sixbank</groupId>
     <artifactId>sixbank-audit-logger-library</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.4-SNAPSHOT</version>
     <name>sixbank-audit-logger-library</name>
     <description>sixbank-audit-logger-library</description>
     <url/>
@@ -35,11 +35,6 @@
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
         <!-- JPA + Hibernate -->
         <dependency>
             <groupId>jakarta.persistence</groupId>
@@ -57,11 +52,6 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 
