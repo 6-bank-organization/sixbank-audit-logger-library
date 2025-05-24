@@ -24,6 +24,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Map;
 import java.util.UUID;
 
@@ -75,7 +76,7 @@ public class AuditLog {
 
     /** Timestamp of the change */
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime timestamp;
+    private OffsetDateTime timestamp;
 
     /** Flexible metadata container */
     private Map<String, Object> metadata;

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 /**
  * Listener that hooks into JPA lifecycle events to automatically audit entity changes.
@@ -18,7 +19,7 @@ import java.time.LocalDateTime;
  * <ul>
  *     <li>{@code @PrePersist} – for create operations</li>
  *     <li>{@code @PreUpdate} – for update operations</li>
- *     <li>{@code @PreRemove} – for delete operations</li>
+ *     <li>{@code @PostRemove} – for delete operations</li>
  * </ul>
  *
  * <p>
@@ -76,11 +77,11 @@ public class AuditEntityListener {
     }
 
     /**
-     * Handles the JPA {@code @PreRemove} event to log delete actions.
+     * Handles the JPA {@code @PostRemove} event to log delete actions.
      *
      * @param entity The entity being removed.
      */
-    @PreRemove
+    @PostRemove
     public void preRemove(Object entity) {
         audit(entity, "DELETE");
     }
@@ -102,7 +103,7 @@ public class AuditEntityListener {
                     .sourceIp(AuditContext.getCurrentIp())
                     .requestUri(AuditContext.getCurrentUri())
                     .serviceName(serviceName)
-                    .timestamp(LocalDateTime.now())
+                    .timestamp(OffsetDateTime.now())
                     .newValue(OBJECT_MAPPER.writeValueAsString(entity))
                     .complianceTag(complianceTag)
                     .build();
