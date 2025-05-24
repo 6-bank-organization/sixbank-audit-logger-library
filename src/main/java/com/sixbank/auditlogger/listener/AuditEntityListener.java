@@ -82,7 +82,7 @@ public class AuditEntityListener {
      * @param entity The entity being removed.
      */
     @PostRemove
-    public void preRemove(Object entity) {
+    public void postRemove(Object entity) {
         audit(entity, "DELETE");
     }
 
