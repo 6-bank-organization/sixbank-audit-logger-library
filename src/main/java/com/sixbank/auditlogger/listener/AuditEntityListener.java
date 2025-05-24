@@ -1,6 +1,8 @@
 package com.sixbank.auditlogger.listener;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.sixbank.auditlogger.log.AuditLog;
 import com.sixbank.auditlogger.context.AuditContext;
 import com.sixbank.auditlogger.dispatcher.AuditDispatcher;
@@ -41,8 +43,9 @@ public class AuditEntityListener {
     /**
      * JSON serializer used to convert entity objects to string.
      */
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper()
+            .registerModule(new JavaTimeModule())
+            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     /**
      * Name of the service for audit tagging, read from application properties.
      * Defaults to "default-service" if not provided.
@@ -82,7 +85,6 @@ public class AuditEntityListener {
      *
      * @param entity The entity being removed.
      */
-    @PreDestroy
     @PreRemove
     public void preRemove(Object entity) {
         audit(entity, "DELETE");

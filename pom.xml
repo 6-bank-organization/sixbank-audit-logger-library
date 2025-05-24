@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.sixbank</groupId>
     <artifactId>sixbank-audit-logger-library</artifactId>
-    <version>1.0.4-SNAPSHOT</version>
+    <version>1.0.5-SNAPSHOT</version>
     <name>sixbank-audit-logger-library</name>
     <description>sixbank-audit-logger-library</description>
     <url/>
@@ -58,6 +58,12 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
