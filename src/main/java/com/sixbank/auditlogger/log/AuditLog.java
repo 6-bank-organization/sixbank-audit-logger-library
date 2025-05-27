@@ -39,7 +39,7 @@ public class AuditLog {
 
     /** Unique ID for the audit record */
     @Id
-    private String id = UUID.randomUUID().toString();
+    private String id;
 
     /** Name of the entity being audited */
     private String entityName;
@@ -200,6 +200,22 @@ public class AuditLog {
 
     public void setMetadata(Map<String, Object> metadata) {
         this.metadata = metadata;
+    }
+
+    public static class AuditLogBuilder {
+        public AuditLog build() {
+            if (this.id == null) {
+                this.id = UUID.randomUUID().toString();
+            }
+            if (this.timestamp == null) {
+                this.timestamp = OffsetDateTime.now();
+            }
+            return new AuditLog(
+                    id, entityName, entityId, action, changedBy,
+                    sourceIp, requestUri, oldValue, newValue, serviceName,
+                    complianceTag, timestamp, metadata
+            );
+        }
     }
 }
 

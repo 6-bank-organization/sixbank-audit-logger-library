@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 /**
  * Responsible for sending audit log messages to a Kafka topic.
  * <p>
@@ -51,6 +53,9 @@ public class AuditKafkaProducer {
      * @param auditLog the {@link AuditLog} event to send
      */
     public void send(AuditLog auditLog) {
+        if (auditLog.getId() == null) {
+            auditLog.setId(UUID.randomUUID().toString());
+        }
         kafkaTemplate.send(topic, auditLog.getId(), auditLog);
     }
 }

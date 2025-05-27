@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.sixbank</groupId>
     <artifactId>sixbank-audit-logger-library</artifactId>
-    <version>1.0.8-SNAPSHOT</version>
+    <version>1.0.9-SNAPSHOT</version>
     <name>sixbank-audit-logger-library</name>
     <description>sixbank-audit-logger-library</description>
     <url/>
