@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.sixbank.auditlogger.context"},{"l":"com.sixbank.auditlogger.dispatcher"},{"l":"com.sixbank.auditlogger.example"},{"l":"com.sixbank.auditlogger.listener"},{"l":"com.sixbank.auditlogger.log"}];updateSearchResults();
