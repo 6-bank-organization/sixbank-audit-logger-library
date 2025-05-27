@@ -8,7 +8,7 @@ package com.sixbank.auditlogger.example;
  *
  * <h2>Overview</h2>
  * <p>The AuditLogger automatically logs entity changes (CREATE, UPDATE, DELETE) by listening to JPA events
- * and pushing the audit logs to Elasticsearch or other log aggregators.</p>
+ * and pushing the audit logs to Kafka. A Kafka Connect sink can then route the logs to Elasticsearch or other storage systems.</p>
  *
  * <h2>Steps to Integrate</h2>
  * <ol>
@@ -19,7 +19,7 @@ package com.sixbank.auditlogger.example;
  * </ol>
  *
  * @author Six Bank
- * @version 1.0.0
+ * @version 1.1.0
  */
 public class AuditLoggerIntegrationGuide {
 
@@ -62,7 +62,7 @@ public class AuditLoggerIntegrationGuide {
      *
      * <pre>{@code
      * import com.sixbank.auditlogger.dispatcher.AuditDispatcher;
-     * import com.sixbank.auditlogger.dispatcher.ElasticsearchAuditDispatcher;
+     * import com.sixbank.auditlogger.dispatcher.KafkaAuditDispatcher;
      * import org.springframework.context.annotation.Bean;
      * import org.springframework.context.annotation.Configuration;
      *
@@ -71,7 +71,7 @@ public class AuditLoggerIntegrationGuide {
      *
      *     @Bean
      *     public AuditDispatcher auditDispatcher() {
-     *         return new ElasticsearchAuditDispatcher();
+     *         return new KafkaAuditDispatcher();
      *     }
      * }
      * }</pre>
@@ -91,12 +91,9 @@ public class AuditLoggerIntegrationGuide {
      *   service-name: kyc-aml-service
      *   compliance-tag: KYC
      *
-     * spring:
-     *   data:
-     *     elasticsearch:
-     *       client:
-     *         reactive:
-     *           endpoints: localhost:9200
+     * kafka:
+     *   bootstrap-servers: localhost:9092
+     *   audit-topic: audit-log-topic
      * </pre>
      */
     public static class YamlConfig {}
@@ -109,7 +106,8 @@ public class AuditLoggerIntegrationGuide {
      * audit.service-name=kyc-aml-service
      * audit.compliance-tag=KYC
      *
-     * spring.data.elasticsearch.client.reactive.endpoints=localhost:9200
+     * kafka.bootstrap-servers=localhost:9092
+     * kafka.audit-topic=audit-log-topic
      * </pre>
      */
     public static class PropertiesConfig {}

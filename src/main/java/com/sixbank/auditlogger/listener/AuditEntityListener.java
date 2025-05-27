@@ -8,6 +8,7 @@ import com.sixbank.auditlogger.context.AuditContext;
 import com.sixbank.auditlogger.dispatcher.AuditDispatcher;
 import jakarta.annotation.PreDestroy;
 import jakarta.persistence.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -38,7 +39,10 @@ import java.time.OffsetDateTime;
  * }</pre>
  */
 @Component
+@RequiredArgsConstructor
 public class AuditEntityListener {
+
+    private final AuditDispatcher dispatcher;
 
     /**
      * JSON serializer used to convert entity objects to string.
@@ -46,6 +50,7 @@ public class AuditEntityListener {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper()
             .registerModule(new JavaTimeModule())
             .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
     /**
      * Name of the service for audit tagging, read from application properties.
      * Defaults to "default-service" if not provided.
@@ -112,11 +117,14 @@ public class AuditEntityListener {
                     .complianceTag(complianceTag)
                     .build();
 
-            AuditDispatcher.dispatch(log);
+            dispatcher.dispatch(log);
+
         } catch (Exception e) {
-            System.err.println("Audit logging failed: " + e.getMessage());
+            // Optionally log or rethrow
+            e.printStackTrace();
         }
     }
+
 
     /**
      * Extracts the value of the field annotated with {@link Id} from the given entity.

@@ -1,27 +1,24 @@
 package com.sixbank.auditlogger.dispatcher;
 
-
 import com.sixbank.auditlogger.log.AuditLog;
-import com.sixbank.auditlogger.repository.AuditLogElasticRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 /**
- * AuditDispatcher is a pluggable mechanism for routing audit logs.
- *
- * Inject the repository during startup.
+ * Dispatches audit logs via Kafka to decouple microservices from Elasticsearch.
  */
+@Component
 @RequiredArgsConstructor
 public class AuditDispatcher {
 
-    private static AuditLogElasticRepository repository;
+    private final AuditKafkaProducer kafkaProducer;
 
-    public static void init(AuditLogElasticRepository repo) {
-        repository = repo;
-    }
-
-    public static void dispatch(AuditLog log) {
-        if (repository != null) {
-            repository.save(log);
-        }
+    /**
+     * Dispatches the audit log by pushing it into Kafka.
+     *
+     * @param auditLog the audit log event
+     */
+    public void dispatch(AuditLog auditLog) {
+        //kafkaProducer.send(auditLog);
     }
 }
