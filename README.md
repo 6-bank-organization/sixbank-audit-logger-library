@@ -1,25 +1,24 @@
 # 📜 SIX Bank Audit Logging Library
 
-A reusable audit logging module for microservices across the SIX Bank platform.  
-It captures and stores auditable events such as entity creation, updates, and deletions in a structured, GDPR-compliant format, with support for Elasticsearch integration.
+A reusable audit logging module for microservices across the SIX Bank platform.
+It captures and publishes auditable events (such as entity creation, updates, and deletions) in a structured, GDPR-compliant format to a Kafka topic for asynchronous downstream processing (e.g., Elasticsearch, data lake, monitoring tools).
 
 ---
 
 ## ✨ Features
 
-- 🔄 **Automatic audit logging** via JPA entity lifecycle (`@EntityListeners`)
-- 🧵 **Thread-safe request context tracking** (user ID, IP, endpoint)
-- 📦 **Decoupled log dispatching** (pluggable to Elasticsearch, Kafka, etc.)
-- 🛡 **GDPR-compliant** data fields and access tracking
-- 🔍 **Searchable audit logs** via Elasticsearch
-- 🧪 **Fully testable and modular** architecture
+* 🔄 **Automatic audit logging** via JPA entity lifecycle (`@EntityListeners`)
+* 🧵 **Thread-safe request context tracking** (user ID, IP, endpoint)
+* 📦 **Decoupled log dispatching** using Kafka
+* 🛡 **GDPR-compliant** data fields and access tracking
+* ☁ **Stream-ready** architecture (logs are consumed by other services)
+* 🧪 **Fully testable and modular** design
 
 ---
 
 ## 📁 Module Structure
 
 ```
-
 com.sixbank.auditlogger
 ├── AuditLog.java                       // Core audit log model
 ├── context/
@@ -27,11 +26,9 @@ com.sixbank.auditlogger
 ├── listener/
 │   └── AuditEntityListener.java        // JPA entity lifecycle hook
 ├── dispatcher/
-│   └── AuditDispatcher.java            // Dispatch mechanism
-└── repository/
-└── AuditLogElasticRepository.java  // Elasticsearch log sink
-
-````
+│   ├── AuditDispatcher.java            // Dispatcher interface
+│   └── AuditKafkaProducer.java         // Kafka log producer
+```
 
 ---
 
@@ -45,37 +42,39 @@ This library is published to the internal SIX Bank Maven registry. Add it to you
 <dependency>
   <groupId>com.sixbank</groupId>
   <artifactId>audit-logger</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.0</version> <!-- Updated version -->
 </dependency>
-````
-
----
-
-### 2️⃣ Configure Elasticsearch in `application.yml`
-
-```yaml
-spring:
-  data:
-    elasticsearch:
-      client:
-        reactive:
-          endpoints: localhost:9200
-      repositories:
-        enabled: true
 ```
 
 ---
 
-### 3️⃣ Initialize Audit Dispatcher
+### 2️⃣ Configure Kafka in `application.yml`
 
-Register the Elasticsearch dispatcher on startup:
+```yaml
+spring:
+  kafka:
+    bootstrap-servers: kafka.internal.sixbank.com:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+audit:
+  kafka:
+    topic: audit-logs
+```
+
+---
+
+### 3️⃣ Initialize the Kafka Dispatcher
+
+Register the Kafka dispatcher on application startup:
 
 ```java
 @Configuration
 public class AuditConfig {
     @Autowired
-    public void register(AuditLogElasticRepository repo) {
-        AuditDispatcher.init(repo);
+    public void register(AuditKafkaProducer producer) {
+        AuditDispatcher.init(producer::send);
     }
 }
 ```
@@ -120,20 +119,21 @@ public class KycDocument {
 
 ---
 
-## 📄 Example Audit Log Output
+## 📄 Example Audit Log Payload (Kafka Message)
 
 ```json
 {
-  "eventType": "UPDATE",
-  "entity": "KycDocument",
+  "id": "a4d51238-bf14-4d9e-94d3-6d2cbf1e6d6f",
+  "action": "UPDATE",
+  "entityName": "KycDocument",
   "entityId": "dcf8423c-912c-11ee-b9d1-0242ac120002",
-  "changedFields": {
-    "status": ["PENDING", "VERIFIED"]
-  },
-  "performedBy": "admin@sixbank.com",
-  "ipAddress": "10.42.0.15",
+  "changedBy": "admin@sixbank.com",
+  "sourceIp": "10.42.0.15",
   "requestUri": "/kyc/verify",
-  "timestamp": "2025-05-17T11:33:41Z"
+  "serviceName": "kyc-service",
+  "timestamp": "2025-05-17T11:33:41Z",
+  "newValue": "{\"status\":\"VERIFIED\"}",
+  "complianceTag": "KYC_CHANGE"
 }
 ```
 
@@ -141,11 +141,11 @@ public class KycDocument {
 
 ## 🛡 GDPR Compliance
 
-This library supports compliance with GDPR and other data regulations by:
+This library helps with regulatory compliance by:
 
-* Capturing user IDs and IPs for traceability
-* Avoiding sensitive field values in logs unless explicitly required
-* Supporting log retention policies (via Elasticsearch TTL or archive strategies)
+* Capturing metadata (user ID, IP address) for traceability
+* Avoiding logging sensitive fields unless explicitly configured
+* Supporting downstream TTL, redaction, and data retention via Kafka consumers
 
 ---
 
@@ -163,7 +163,7 @@ Docs will be available under `target/site/apidocs`.
 
 ## 🤝 Contributing
 
-All services using this library are encouraged to raise issues, request enhancements, or contribute additional log sinks (e.g., Kafka or file-based).
+All services using this library are encouraged to raise issues, request enhancements, or contribute additional dispatchers (e.g., file, database, event bus).
 
 Please follow the SIX Bank internal contribution guidelines.
 
