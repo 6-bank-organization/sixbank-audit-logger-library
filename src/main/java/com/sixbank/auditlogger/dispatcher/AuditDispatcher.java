@@ -19,6 +19,6 @@ public class AuditDispatcher {
      * @param auditLog the audit log event
      */
     public void dispatch(AuditLog auditLog) {
-        //kafkaProducer.send(auditLog);
+        kafkaProducer.send(auditLog);
     }
 }
