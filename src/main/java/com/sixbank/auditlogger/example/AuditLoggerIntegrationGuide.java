@@ -19,7 +19,7 @@ package com.sixbank.auditlogger.example;
  * </ol>
  *
  * @author Six Bank
- * @version 1.1.0
+ * @version 0.0.1
  */
 public class AuditLoggerIntegrationGuide {
 
